@@ -56,7 +56,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
             HashMap paramMap = new HashMap();
             paramMap.put("pageNo", 1);
-            paramMap.put("pageSize", 1500);
+            paramMap.put("pageSize", 1800);
             List list = new ArrayList<>();
             list.add(600396852);
             paramMap.put("poiIds", list);
@@ -98,9 +98,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
                 log.error("菜单接口获取失败！");
             }
 
-            for (String menuName : menuNames) {
-                System.out.println(menuName);
-            }
+//            for (String menuName : menuNames) {
+//                System.out.println(menuName);
+//            }
         } catch (Exception e) {
             log.error(e.getMessage());
             e.printStackTrace();

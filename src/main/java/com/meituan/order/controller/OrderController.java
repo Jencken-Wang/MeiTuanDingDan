@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class OrderController {
 
 
-
-
+    public void print() {
+        System.out.println("123123123");
+    }
 }

@@ -1,6 +1,7 @@
 package com.meituan.order.controller;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
@@ -94,7 +95,24 @@ public class OrderDetailController {
     public void TypeIncomeFile(@RequestParam String startTime, @RequestParam String endTime, @RequestParam String fileName) {
         try {
             log.info("开始生成菜品收入文件");
-            List<MenuIncomeDto> incomeDtos = typeIncome(startTime, endTime);
+            List<MenuIncomeDto> incomeDtos = new ArrayList<>();
+            //时间超过10天分段查询
+            Date start = DateUtil.parse(startTime);
+            Date end = DateUtil.parse(endTime);
+            Date startIndex = start;
+            Date endIndex = DateUtil.offsetDay(start, 10);
+            while (true) {
+                if (DateUtil.compare(endIndex, end) < 0) {
+                    log.info(startIndex + " " + endIndex);
+                    incomeDtos.addAll(typeIncome(DateUtil.formatDateTime(startIndex), DateUtil.formatDateTime(endIndex)));
+                    startIndex = DateUtil.offsetSecond(endIndex, 1);
+                    endIndex = DateUtil.offsetDay(endIndex, 10);
+                } else {
+                    log.info(startIndex + " " + end);
+                    incomeDtos.addAll(typeIncome(DateUtil.formatDateTime(startIndex), DateUtil.formatDateTime(end)));
+                    break;
+                }
+            }
 
             new File(System.getProperty("user.dir") + "/" + fileName);
 

@@ -52,7 +52,7 @@ public class MenuController {
             Menu menu = new Menu();
             menu.setDishesName(el);
             menu.setDishesType(5);
-            menu.setDishesTag(1);
+            menu.setDishesTag(2);
             menu.setConment("未分类");
             return menu;
         }).collect(Collectors.toList());

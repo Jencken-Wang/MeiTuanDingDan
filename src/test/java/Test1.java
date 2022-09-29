@@ -54,9 +54,7 @@ public class Test1 {
 
 //        orderDetailController.typeIncome("2022-07-31 00:00:00","2022-07-31 23:59:59");
 
-        orderDetailController.TypeIncomeFile("2022-08-01 00:00:00","2022-08-10 23:59:59", "income.xlsx");
-        orderDetailController.TypeIncomeFile("2022-08-11 00:00:00","2022-08-20 23:59:59", "income2.xlsx");
-        orderDetailController.TypeIncomeFile("2022-08-21 00:00:00","2022-08-31 23:59:59", "income3.xlsx");
+        orderDetailController.TypeIncomeFile("2022-09-01 00:00:00","2022-09-30 23:59:59", "income0901-0930.xlsx");
 
     }
 
