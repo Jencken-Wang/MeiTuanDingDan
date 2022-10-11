@@ -17,4 +17,5 @@ public interface IMenuService extends IService<Menu> {
 
     List<String> getAllMenu(String Cookie);
 
+    List<String> getAllMenu(String Cookie, Long startTime, Long endTime);
 }

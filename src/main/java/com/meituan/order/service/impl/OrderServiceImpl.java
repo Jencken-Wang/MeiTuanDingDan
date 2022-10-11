@@ -62,7 +62,7 @@ public class OrderServiceImpl implements IOrderService {
                     .headerMap(headerMap, true)
                     .contentLength(JSONUtil.toJsonStr(param).getBytes().length)
                     .body(JSONUtil.toJsonStr(param))
-                    .timeout(2000)
+                    .timeout(10000)
                     .execute()
                     .body();
             Optional<JSONObject> resultOp = Optional.ofNullable(JSONUtil.parseObj(result));

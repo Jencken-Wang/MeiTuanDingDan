@@ -1,6 +1,7 @@
 package com.meituan.order.controller;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONArray;
@@ -100,14 +101,14 @@ public class OrderDetailController {
             Date start = DateUtil.parse(startTime);
             Date end = DateUtil.parse(endTime);
             Date startIndex = start;
-            Date endIndex = DateUtil.offsetDay(start, 10);
+            Date endIndex = DateUtil.offsetDay(start, 10).setField(DateField.HOUR_OF_DAY, 23).setField(DateField.MINUTE, 59).setField(DateField.SECOND, 59);
             while (true) {
                 if (DateUtil.compare(endIndex, end) < 0) {
                     log.info(startIndex + " " + endIndex);
                     incomeDtos.addAll(typeIncome(DateUtil.formatDateTime(startIndex), DateUtil.formatDateTime(endIndex)));
                     startIndex = DateUtil.offsetSecond(endIndex, 1);
                     endIndex = DateUtil.offsetDay(endIndex, 10);
-                } else {
+                } else{
                     log.info(startIndex + " " + end);
                     incomeDtos.addAll(typeIncome(DateUtil.formatDateTime(startIndex), DateUtil.formatDateTime(end)));
                     break;

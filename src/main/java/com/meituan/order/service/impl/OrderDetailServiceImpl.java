@@ -38,7 +38,7 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
         String result = HttpRequest.get("https://pos.meituan.com/web/api/v1/orders/detail")
                 .headerMap(headerMap, true)
                 .form(paramMap)
-                .timeout(5000)
+                .timeout(10000)
                 .execute()
                 .body();
 
