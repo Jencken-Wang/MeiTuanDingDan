@@ -20,12 +20,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import reactor.util.annotation.Nullable;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -93,7 +96,7 @@ public class OrderDetailController {
      * @param fileName
      */
     @RequestMapping("/typeIncome/downloadFile")
-    public void TypeIncomeFile(@RequestParam String startTime, @RequestParam String endTime, @RequestParam String fileName) {
+    public void TypeIncomeFile(@RequestParam String startTime, @RequestParam String endTime, @RequestParam(required = false) String fileName, @Nullable HttpServletResponse response) {
         try {
             log.info("开始生成菜品收入文件");
             List<MenuIncomeDto> incomeDtos = new ArrayList<>();
@@ -115,11 +118,14 @@ public class OrderDetailController {
                 }
             }
 
-            new File(System.getProperty("user.dir") + "/" + fileName);
-
-
-            ExcelWriter writer = ExcelUtil.getWriter(System.getProperty("user.dir") + "/" + fileName);
-            writer.addHeaderAlias("orderId", "订单id");
+            if (StrUtil.isBlank(fileName)) {
+                fileName = DateUtil.format(start, "yyyyMMddHHmmss") + "-" + DateUtil.format(end, "yyyyMMddHHmmss") + "income.xlsx";
+            }else if (!fileName.endsWith(".xlsx")) {
+                fileName = fileName + ".xlsx";
+            }
+            File excelFile = new File(System.getProperty("user.dir") + "/" + fileName);
+            ExcelWriter writer = ExcelUtil.getWriter(excelFile);
+            writer.addHeaderAlias("orderId", "id");
             writer.addHeaderAlias("orderNum", "订单号");
             writer.addHeaderAlias("foodIncome", "食品收入");
             writer.addHeaderAlias("alcoholIncome", "酒水收入");
@@ -135,8 +141,14 @@ public class OrderDetailController {
 
             ArrayList<MenuIncomeDto> menuIncomeRows = CollUtil.newArrayList(incomeDtos);
             writer.write(menuIncomeRows, true);
+            if (response != null) {
+                ServletOutputStream outputStream = response.getOutputStream();
+                response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+                response.setContentType("application/octet-stream");
+//                response.setContentType("application/vnd.ms-excel;charset=utf-8");
+                writer.flush(outputStream, true);
+            }
             writer.close();
-
         } catch (Exception e) {
             e.printStackTrace();
             log.info("收入文件下载出错！"+e.getMessage());
