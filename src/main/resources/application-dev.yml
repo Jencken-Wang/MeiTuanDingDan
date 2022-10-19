@@ -31,3 +31,6 @@ spring:
 #    fetchRegister: false
 #serviceUrl:
 #  defaultZone: http://${eureka.instance.hostname}:${1024}/eureka/
+file:
+  #path: /app/file/   #容器目录
+   path: /            #本地目录

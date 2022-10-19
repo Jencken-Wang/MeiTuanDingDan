@@ -17,6 +17,7 @@ import com.meituan.order.service.IOrderService;
 import com.meituan.order.util.Constant;
 import com.meituan.order.util.MenuTypeEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,6 +48,9 @@ public class OrderDetailController {
 
     @Resource
     private IOrderService orderService;
+
+    @Value("${file.path}")
+    private String path;
 
     Map<String, Integer> menuTypeMap;
     @PostConstruct
@@ -123,7 +127,7 @@ public class OrderDetailController {
             }else if (!fileName.endsWith(".xlsx")) {
                 fileName = fileName + ".xlsx";
             }
-            File excelFile = new File(System.getProperty("user.dir") + "/" + fileName);
+            File excelFile = new File(System.getProperty("user.dir") + path + fileName);
             ExcelWriter writer = ExcelUtil.getWriter(excelFile);
             writer.addHeaderAlias("orderId", "id");
             writer.addHeaderAlias("orderNum", "订单号");
