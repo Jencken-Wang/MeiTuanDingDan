@@ -95,6 +95,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
             } else {
                 log.error("菜单接口获取失败！");
+                log.error(result);
             }
 
 //            for (String menuName : menuNames) {
@@ -179,6 +180,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
             } else {
                 log.error("历史菜单接口获取失败！");
+                log.error(result);
             }
 
 //            for (String menuName : menuNames) {

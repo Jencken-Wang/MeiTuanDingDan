@@ -68,6 +68,7 @@ public class OrderServiceImpl implements IOrderService {
             Optional<JSONObject> resultOp = Optional.ofNullable(JSONUtil.parseObj(result));
             if (resultOp.map(x -> x.getInt("code")).get() != 0) {
                 log.error("获取{}到{}订单列表失败", startTime, endTime);
+                log.error(result);
                 return null;
             }
             return resultOp.map(x -> x.getJSONObject("data")).orElse(null);

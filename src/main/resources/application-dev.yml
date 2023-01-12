@@ -5,11 +5,12 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
+#    username: root
 #    password: root
-    url: jdbc:mysql://localhost:3306/meituan?characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT&autoReconnect=true&useSSL=false&characterEncoding=utf-8
-#    password: 123456
-#    url: jdbc:mysql://42.194.130.239:3306/meituan?characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT&autoReconnect=true&useSSL=false&characterEncoding=utf-8
+#    url: jdbc:mysql://localhost:3306/meituan?characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT&autoReconnect=true&useSSL=false&characterEncoding=utf-8
+    username: admin
+    password: 123456
+    url: jdbc:mysql://192.168.6.206:3306/meituan?characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT&autoReconnect=true&useSSL=false&characterEncoding=utf-8
   redis:
     host: 127.0.0.1
     port: 6379
@@ -32,5 +33,5 @@ spring:
 #serviceUrl:
 #  defaultZone: http://${eureka.instance.hostname}:${1024}/eureka/
 file:
-  #path: /app/file/   #容器目录
-   path: /            #本地目录
+#    path: /app/file/   #容器目录
+    path: /            #本地目录

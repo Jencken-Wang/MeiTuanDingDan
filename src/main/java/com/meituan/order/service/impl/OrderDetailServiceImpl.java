@@ -47,6 +47,7 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
         //code不为0失败，结束
         if (Optional.ofNullable(JSONUtil.parseObj(result)).map(x -> x.getInt("code")).get() != 0) {
             log.error( orderId+"获取订单信息失败！！！");
+            log.error(result);
             return null;
         }
 
